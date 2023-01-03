@@ -9,8 +9,8 @@ import {
   onDropHandler
 } from "../../features/dnd";
 import {TDragOverContext, TDragStartContext, TDropContext} from "../../types/dndTypes";
-import {editCategory, moveCategory, removeCategory, setCurrentCategory} from "../../store/categorySlice";
-import {addItem, moveItem, removeItem} from "../../store/itemSlice";
+import {editCategory, moveCategory, removeCategoryAndItems, setCurrentCategory} from "../../store/categorySlice";
+import {addItem, moveItem} from "../../store/itemSlice";
 import Button from "../../components/Button/Button";
 import {TCategoryExtended} from "../../types/dataInterfaces";
 import {useHasChildren} from "../../hooks/useHasChildren";
@@ -64,9 +64,7 @@ const Category = ({title, id, inputFocus, children}: TCategoryExtended) => {
     }))
   }
 
-  const onRemoveHandler = () => Promise
-    .resolve(dispatch(removeCategory({id})))
-    .then(() => dispatch(removeItem({categoryId: id})))
+  const onRemoveHandler = () => dispatch(removeCategoryAndItems(id))
 
   return (
     <div

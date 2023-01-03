@@ -1,11 +1,20 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import categories from '../assets/data/categories.json'
 import {ICategory} from "../types/dataInterfaces";
+import {removeItem} from "./itemSlice";
 
 interface CategoryState {
   categories: ICategory[],
   currentCategory: ICategory | null
 }
+
+export const removeCategoryAndItems = createAsyncThunk(
+  'category/remove',
+  (id: string, {dispatch}) => {
+    dispatch(removeCategory({id}))
+    dispatch(removeItem({categoryId: id}))
+  }
+)
 
 const initialState: CategoryState = {
   categories,
